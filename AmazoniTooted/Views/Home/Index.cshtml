@@ -1,0 +1,25 @@
+﻿@using AmazoniTooted.Models
+@model HomeViewModel
+@{
+    ViewBag.Title = "Amazoni toodete otsing";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        @using (Html.BeginForm("Tulemus", "Home", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            <h2>Otsing</h2>
+            <hr />
+            <div class="form-group">
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.Otsing, new { @class = "form-control" } )
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-2">
+                    <input type="submit" value="Otsi" class="btn btn-default" />
+                </div>
+            </div>
+        }
+    </div>
+</div>

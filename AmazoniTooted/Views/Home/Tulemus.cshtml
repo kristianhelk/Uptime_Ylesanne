@@ -1,0 +1,38 @@
+﻿@using AmazoniTooted.Models
+@model TulemusViewModel
+@{
+    ViewBag.Title = "Tulemus";
+}
+
+@Scripts.Render("~/bundles/jquery")
+<script src="~/Scripts/ListItems.js?ver=1.8"></script>
+<script>
+    var pageCount = {count: @Model.PageCount };
+    var itemList = {list: @Html.Raw(Json.Encode(Model)) };
+    var priceList = {list: [], cur: "USD", rate: 1 };
+    @foreach(var i in Model.AmazonItemList)
+    {
+        @:priceList.list.push(@Html.Raw(Json.Encode(i.Hind)));
+    }
+</script>
+
+<h2>Tulemus</h2>
+<p>
+    Valuuta: 
+    <select id="currency" onchange="ChangePrices(itemList.list, pageCount.count, this.value, priceList)">
+        <option></option>
+    </select>
+    <table id="itemlist" class="table table-striped table-hover">
+        @for (int i = 0; i < 13; i++)
+        {
+            <tr></tr>
+        }
+    </table>
+</p>
+<button id="prev" class="btn btn-default" onclick="PrevPage( itemList.list, priceList.list, pageCount )" disabled="disabled">Eelmine</button>
+<button id="next" class="btn btn-default" onclick="NextPage( itemList, priceList, pageCount, '@Url.Action("TulemusLoadPage", "Home")' )">Järgmine</button>
+
+<script>
+    ListItems(itemList.list);
+    GetCurrencies('@Url.Action("GetCurrencies", "Home")')
+</script>
